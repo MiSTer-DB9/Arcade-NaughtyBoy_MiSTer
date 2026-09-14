@@ -29,7 +29,7 @@ module emu
 	input         RESET,
 
 	//Must be passed to hps_io module
-	inout  [48:0] HPS_BUS,
+	inout  [45:0] HPS_BUS,
 
 	//Base video clock. Usually equals to CLK_SYS.
 	output        CLK_VIDEO,
@@ -57,6 +57,8 @@ module emu
 	input  [11:0] HDMI_WIDTH,
 	input  [11:0] HDMI_HEIGHT,
 	output        HDMI_FREEZE,
+	output        HDMI_BLACKOUT,
+	output        HDMI_BOB_DEINT,
 
 `ifdef MISTER_FB
 	// Use framebuffer in DDRAM
@@ -194,6 +196,8 @@ assign BUTTONS   = 0;
 assign AUDIO_MIX = 0;
 assign FB_FORCE_BLANK = 0;
 assign HDMI_FREEZE = 0;
+assign HDMI_BLACKOUT = 0;
+assign HDMI_BOB_DEINT = 0;
 assign VGA_DISABLE = 0;
 
 // [MiSTer-DB9 BEGIN] - DB9/SNAC8 support: joydb wrapper
@@ -476,7 +480,7 @@ naughty_boy naughty_boy
 	.clock_12(clk_sys),
 
 	.reset(reset),
-//	.pause(pause_cpu),
+	.pause(pause_cpu),
 
 
 	.dn_addr(ioctl_addr[15:0]),
